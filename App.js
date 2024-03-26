@@ -3,17 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import Card from "./components/Card";
 import SearchComponent from "./components/Search";
 import { Icon } from "@rneui/themed";
 
 export default function App() {
-  
-  const [searchQuery, setSearchQuery] = useState("");
 
   //TODO: Voorbeeld data voor de style. Uiteindelijk moet dit met een API gaan werken.
   const [data, setData] = useState([
@@ -25,23 +21,6 @@ export default function App() {
     { id: "6", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
     { id: "7", title: "Apache", book: "New West", blz: "20" },
   ]);
-
-  const [filteredData, setFilteredData] = useState(data);
-
-  const handleSearch = (searchText) => {
-    console.log("Search Text:", searchText);
-    // TODO: Moet de cards gaan zoeken
-    if(searchText === ""){
-      setFilteredData(data);
-    } else {
-      const newData = data.filter(item => {
-        const itemName = item.title.toLowerCase();
-        const text = searchText.toLowerCase();
-        return itemName.indexOf(text) > -1;
-      });
-      setFilteredData(newData);
-    }
-  };
 
   const handleOnPress = () => {
     //TODO: Link maken naar add page
@@ -58,22 +37,9 @@ export default function App() {
         style={styles.background}
       >
         <View style={styles.overlay}>
-        {/* TODO: Uitzoeken hoe we gelijk kunnen zoeken als we de tekst intikken. */}
-          <SearchComponent onSearch={handleSearch} value={searchQuery} />
-            <FlatList
-              data={filteredData}
-              renderItem={({ item }) => (
-                <Card
-                  title={item.title}
-                  description={"Boek: " + item.book}
-                  blz={"blz " + item.blz}
-                />
-              )}
-              keyExtractor={(item) => item.id}
-              contentContainerStyle={styles.flatlist}
-            />
+          <SearchComponent data={data} />
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleOnPress}>
+              <TouchableOpacity style={styles.buttonAdd} onPress={handleOnPress}>
                 <Icon name="add" size={24} color="white" />
               </TouchableOpacity>
             </View>
@@ -94,7 +60,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonContainer:{
-    flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'flex-end', 
     marginBottom: 25, 
@@ -120,14 +85,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
-  flatlist: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-  },
   hidden:{
     opacity: 0
   },
-  button: {
+  buttonAdd: {
     backgroundColor: '#1d3275', 
     width: 65,
     height: 65,

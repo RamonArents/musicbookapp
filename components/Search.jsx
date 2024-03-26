@@ -1,34 +1,71 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // You may need to install @expo/vector-icons if you're using Expo
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from "react-native";
+import Card from "./Card";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function SearchComponent({ onSearch }) {
-  const [searchText, setSearchText] = useState('');
+export default function SearchComponent({ data }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
 
-  const handleSearch = () => {
-    onSearch(searchText);
+  const handleSearch = (text) => {
+    if (typeof text !== "string") return;
+
+    const filtered = data.filter(
+      (item) =>
+        item.title.toLowerCase().includes(text.toLowerCase()) ||
+        item.book.toLowerCase().includes(text.toLowerCase()) ||
+        item.blz.toLowerCase().includes(text.toLowerCase())
+    );
+    setSearchQuery(text);
+    setFilteredData(filtered);
   };
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Zoeken..."
-        onChangeText={text => setSearchText(text)}
-        value={searchText}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSearch}>
-        <Ionicons name="search" size={24} color="black" />
-      </TouchableOpacity>
+      <View style={styles.searchBox}>
+        <TextInput
+          style={styles.input}
+          placeholder="Zoeken..."
+          onChangeText={handleSearch}
+          value={searchQuery}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleSearch}>
+          <Ionicons name="search" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View>
+        <FlatList
+          data={filteredData}
+          renderItem={({ item }) => (
+            <Card
+              title={item.title}
+              description={"Boek: " + item.book}
+              blz={"blz " + item.blz}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.flatlist}
+        />
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    marginTop: 8,
+    flex: 1,
+  },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
     borderRadius: 8,
     padding: 8,
     marginHorizontal: 16,
@@ -40,5 +77,9 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 8,
+  },
+  flatlist: {
+    paddingVertical: 16,
+    paddingHorizontal: 16,
   },
 });
