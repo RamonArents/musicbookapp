@@ -1,5 +1,6 @@
 import Home from "./Views/Home";
 import Add from "./Views/Add";
+import Header from "./components/Header";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -19,19 +20,18 @@ export default function App() {
                 <Text style={styles.headerText}>Muziek Boeken</Text>
               </View>
             ),
-            headerStyle: {
-              backgroundColor: "#1d3275",
-              height: 100,
-            },
-            headerTitleStyle: {
-              fontFamily: "Roboto",
-            },
-            headerTintColor: "white",
-            headerTitleAlign: "center",
           }}
           component={Home}
         />
-        <Stack.Screen name="Add" component={Add} />
+        <Stack.Screen
+          name="Add"
+          options={({navigation}) => ({
+            header: () => (
+              <Header navigation={navigation} title="Toevoegen" />
+            ),
+          })}
+          component={Add}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -39,7 +39,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   header: {
-    height: 120,
+    height: 100,
     backgroundColor: "#1d3275",
     alignItems: "center",
     justifyContent: "center",
@@ -48,5 +48,6 @@ const styles = StyleSheet.create({
   headerText: {
     color: "white",
     fontSize: 18,
+    fontFamily: "Roboto",
   },
 });
