@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Card({ title, description, blz }) {
   return (
@@ -6,6 +7,10 @@ export default function Card({ title, description, blz }) {
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
       <Text style={styles.description}>{blz}</Text>
+      <View style={styles.iconContainer}>
+        <Icon style={styles.icons} name="edit" size={30} color="black" />
+        <Icon style={styles.icons} name="trash" size={30} color="black" />
+      </View>
     </View>
   );
 }
@@ -26,4 +31,12 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
   },
+  //TODO: Style buttons
+  iconContainer:{
+    flex: 1,
+    justifyContent: "center", 
+  },
+  icons:{
+    alignSelf:"flex-end",
+  }
 });
