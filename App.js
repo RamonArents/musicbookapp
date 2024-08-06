@@ -1,5 +1,6 @@
 import Home from "./Views/Home";
 import Add from "./Views/Add";
+import Delete from "./Views/Delete";
 import Header from "./components/Header";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
@@ -31,6 +32,15 @@ export default function App() {
             ),
           })}
           component={Add}
+        />
+        <Stack.Screen
+          name="Delete"
+          options={({navigation}) => ({
+            header: () => (
+              <Header navigation={navigation} title="Verwijderen" />
+            ),
+          })}
+          component={Delete}
         />
       </Stack.Navigator>
     </NavigationContainer>

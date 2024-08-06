@@ -9,7 +9,7 @@ import {
 import Card from "./Card";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function SearchComponent({ data }) {
+export default function SearchComponent({ data, navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(data);
 
@@ -47,6 +47,7 @@ export default function SearchComponent({ data }) {
               title={item.title}
               description={"Boek: " + item.book}
               blz={"blz " + item.blz}
+              navigation={navigation}
             />
           )}
           keyExtractor={(item) => item.id}

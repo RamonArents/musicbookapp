@@ -31,7 +31,7 @@ export default function Home({ navigation }) {
         style={styles.background}
       >
         <View style={styles.overlay}>
-          <SearchComponent data={data} />
+          <SearchComponent data={data} navigation={navigation} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.buttonAdd} onPress={handleOnPress}>
               <Icon name="add" size={24} color="white" />
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   buttonAdd: {
-    backgroundColor: "#1d3275",
+    backgroundColor: "#0ec7e8",
     width: 65,
     height: 65,
     borderRadius: 37,

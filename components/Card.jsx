@@ -1,12 +1,18 @@
+
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function Card({ title, description, blz }) {
+export default function Card({ title, description, blz, navigation }) {
+
+  const handleOnPress = () => {
+    navigation.navigate("Delete");
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.iconContainer}>
-        <Icon style={styles.icons} name="edit" size={30} color="black" />
-        <Icon style={styles.icons} name="trash" size={30} color="black" />
+        <Icon style={styles.icons} name="edit" size={30} color="white" />
+        <Icon style={styles.icons} name="trash" size={30} color="white" onPress={handleOnPress} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
@@ -19,7 +25,7 @@ export default function Card({ title, description, blz }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#1d3275",
     borderRadius: 8,
     marginBottom: 16,
     elevation: 4,
@@ -28,9 +34,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
+    color:"white",
   },
   description: {
     fontSize: 16,
+    color:"white",
   },
   iconContainer: {
     flex: 1,
