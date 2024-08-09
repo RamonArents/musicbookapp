@@ -1,5 +1,6 @@
 import Home from "./Views/Home";
 import Add from "./Views/Add";
+import Edit from "./Views/Edit";
 import Delete from "./Views/Delete";
 import Header from "./components/Header";
 import React from "react";
@@ -32,6 +33,15 @@ export default function App() {
             ),
           })}
           component={Add}
+        />
+        <Stack.Screen
+          name="Edit"
+          options={({navigation}) => ({
+            header: () => (
+              <Header navigation={navigation} title="Bewerken" />
+            ),
+          })}
+          component={Edit}
         />
         <Stack.Screen
           name="Delete"
