@@ -5,7 +5,7 @@ import { HeaderBackButton } from "@react-navigation/elements";
 export default function Header({ navigation, title }) {
   return (
     <View style={styles.header}>
-      <View style={styles.leftContainer}>
+      <View style={[styles.leftContainer, styles.flexStart]}>
         <HeaderBackButton
           tintColor="white"
           onPress={() => navigation.goBack()}
@@ -13,7 +13,7 @@ export default function Header({ navigation, title }) {
       </View>
 
       <View style={styles.centerContainer}>
-        <Text style={styles.headerText}>{title}</Text>
+        <Text style={[styles.headerText, styles.flexStart]}>{title}</Text>
       </View>
     </View>
   );
@@ -30,14 +30,15 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     flex: 1,
-    alignItems: 'flex-start', 
   },
   centerContainer: {
-    flex: 1.6, 
-    alignItems: 'flex-start',
+    flex: 1.6,
   },
   headerText: {
-    color: "white",
+    color: "#fff",
     fontSize: 18,
   },
+  flexStart:{
+    alignItems: "flex-start",
+  }
 });

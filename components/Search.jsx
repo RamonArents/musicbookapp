@@ -27,10 +27,10 @@ export default function SearchComponent({ data, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styles.flex1]}>
       <View style={styles.searchBox}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.flex1]}
           placeholder="Zoeken..."
           onChangeText={handleSearch}
           value={searchQuery}
@@ -61,7 +61,6 @@ export default function SearchComponent({ data, navigation }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 8,
-    flex: 1,
   },
   searchBox: {
     flexDirection: "row",
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   input: {
-    flex: 1,
     paddingHorizontal: 8,
   },
   button: {
@@ -82,5 +80,8 @@ const styles = StyleSheet.create({
   flatlist: {
     paddingVertical: 16,
     paddingHorizontal: 16,
+  },
+  flex1: {
+    flex: 1,
   },
 });

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   headerText: {
-    color: "white",
+    color: "#fff",
     fontSize: 18,
     fontFamily: "Roboto",
   },
