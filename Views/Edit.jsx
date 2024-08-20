@@ -5,18 +5,18 @@ import {
   Text,
   ImageBackground,
 } from "react-native";
-import styles from "../styles/AddAndEdit";
+import styles from "../styles/Style";
 
 export default function Edit({ route }) {
   const { title, book, blz } = route.params;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.flex1}>
       <ImageBackground
         source={require("../assets/images/background.jpg")}
         style={styles.background}
       >
-        <View style={styles.overlay}>
+        <View style={[styles.overlay, styles.overlayPosition]}>
           <View style={styles.form}>
             <Text style={[styles.labels, styles.colorWhite]}>Titel:</Text>
             <TextInput style={styles.input} placeholder="Titel" value={title} />

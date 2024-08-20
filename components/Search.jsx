@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Card from "./Card";
 import { Ionicons } from "@expo/vector-icons";
+import mainStyle from "../styles/Style";
 
 export default function SearchComponent({ data, navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,10 +28,10 @@ export default function SearchComponent({ data, navigation }) {
   };
 
   return (
-    <View style={[styles.container, styles.flex1]}>
+    <View style={[styles.container, mainStyle.flex1]}>
       <View style={styles.searchBox}>
         <TextInput
-          style={[styles.input, styles.flex1]}
+          style={[styles.input, mainStyle.flex1]}
           placeholder="Zoeken..."
           onChangeText={handleSearch}
           value={searchQuery}
@@ -80,8 +81,5 @@ const styles = StyleSheet.create({
   flatlist: {
     paddingVertical: 16,
     paddingHorizontal: 16,
-  },
-  flex1: {
-    flex: 1,
   },
 });

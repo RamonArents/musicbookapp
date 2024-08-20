@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import mainStyle from "../styles/Style";
 
 export default function Card({ title, description, blz, navigation }) {
   const handleEdit = () => {
@@ -12,7 +13,7 @@ export default function Card({ title, description, blz, navigation }) {
 
   return (
     <View style={styles.card}>
-      <View style={[styles.iconContainer, styles.flex1]}>
+      <View style={[styles.iconContainer, mainStyle.flex1]}>
         <Icon
           style={styles.icons}
           name="edit"
@@ -28,10 +29,10 @@ export default function Card({ title, description, blz, navigation }) {
           onPress={handleDelete}
         />
       </View>
-      <View style={[styles.textContainer, styles.flex1]}>
-        <Text style={[styles.title, styles.colorWhite]}>{title}</Text>
-        <Text style={[styles.description, styles.colorWhite]}>{description}</Text>
-        <Text style={[styles.description, styles.colorWhite]}>{blz}</Text>
+      <View style={[styles.textContainer, mainStyle.flex1]}>
+        <Text style={[styles.title, mainStyle.colorWhite]}>{title}</Text>
+        <Text style={[styles.description, mainStyle.colorWhite]}>{description}</Text>
+        <Text style={[styles.description, mainStyle.colorWhite]}>{blz}</Text>
       </View>
     </View>
   );
@@ -65,10 +66,4 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: -30,
   },
-  flex1: {
-    flex: 1,
-  },
-  colorWhite:{
-    color: "#fff",
-  }
 });

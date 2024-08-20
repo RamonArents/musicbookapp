@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   background: {
     height: "100%",
     resizeMode: "cover",
@@ -11,6 +8,8 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  overlayPosition: {
     paddingHorizontal: 16,
     justifyContent: "center",
   },
@@ -40,6 +39,9 @@ const styles = StyleSheet.create({
   colorWhite: {
     color: "#fff",
   },
+  flex1: {
+    flex:1,
+  }
 });
 
 export default styles;

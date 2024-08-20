@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import SearchComponent from "../components/Search";
 import { Icon } from "@rneui/themed";
+import mainStyle from "../styles/Style";
 
 export default function Home({ navigation }) {
   //TODO: Voorbeeld data voor de style. Uiteindelijk moet dit met een API gaan werken.
@@ -25,12 +26,12 @@ export default function Home({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={mainStyle.flex1}>
       <ImageBackground
         source={require("../assets/images/background.jpg")}
-        style={styles.background}
+        style={mainStyle.background}
       >
-        <View style={styles.overlay}>
+        <View style={mainStyle.overlay}>
           <SearchComponent data={data} navigation={navigation} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.buttonAdd} onPress={handleOnPress}>
@@ -44,25 +45,11 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   buttonContainer: {
     justifyContent: "flex-end",
     alignItems: "flex-end",
     marginBottom: 25,
     marginRight: 16,
-  },
-  background: {
-    height: "100%",
-    resizeMode: "cover",
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  hidden: {
-    opacity: 0,
   },
   buttonAdd: {
     backgroundColor: "#0ec7e8",
