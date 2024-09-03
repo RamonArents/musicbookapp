@@ -1,4 +1,9 @@
 import {
+  openDatabase,
+  insertBook,
+  createTable,
+} from "../controllers/db";
+import {
   TextInput,
   View,
   TouchableOpacity,
@@ -6,11 +11,6 @@ import {
   ImageBackground,
 } from "react-native";
 import styles from "../styles/Style";
-import {
-  openDatabase,
-  insertBook,
-  createTable,
-} from "../controllers/db";
 import { useEffect, useState } from "react";
 
 
@@ -29,8 +29,8 @@ export default function Add() {
       setDb(dbInstance);
       createTable(dbInstance);
       }catch(error){
-        setError(error.message);
-        console.error("Failed to open database: " + error);
+        //setError(error.message);
+        //console.error("Failed to open database: " + error);
       }
     };
 
