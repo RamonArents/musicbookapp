@@ -7,8 +7,31 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useEffect, useState } from "react";
+import {
+  openDatabase,
+  createTable,
+} from "./controllers/db";
 
 export default function App() {
+  const [db, setDb] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const setupDatabase = async () => {
+      try{
+      const dbInstance = await openDatabase();
+      setDb(dbInstance);
+      createTable(dbInstance);
+      }catch(error){
+        setError(error.message);
+        console.error("Failed to open database: " + error);
+      }
+    };
+
+    setupDatabase();
+  }, []);
+
   const Stack = createNativeStackNavigator();
 
   return (

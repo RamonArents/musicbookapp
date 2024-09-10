@@ -1,7 +1,6 @@
 import {
   openDatabase,
   insertBook,
-  createTable,
 } from "../controllers/db";
 import {
   TextInput,
@@ -11,33 +10,17 @@ import {
   ImageBackground,
 } from "react-native";
 import styles from "../styles/Style";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function Add() {
   const [title, setTitle] = useState("");
   const [book, setBook] = useState("");
   const [blz, setBlz] = useState("");
-  const [db, setDb] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const setupDatabase = async () => {
-      try{
-      const dbInstance = await openDatabase();
-      setDb(dbInstance);
-      createTable(dbInstance);
-      }catch(error){
-        setError(error.message);
-        console.error("Failed to open database: " + error);
-      }
-    };
-
-    setupDatabase();
-  }, []);
 
   const handleOnPress = async () => {
     try {
+      const db = await openDatabase();
       await insertBook(db, title, book, blz);
       setTitle("");
       setBook("");

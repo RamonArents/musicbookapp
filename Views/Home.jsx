@@ -8,8 +8,26 @@ import {
 import SearchComponent from "../components/Search";
 import { Icon } from "@rneui/themed";
 import mainStyle from "../styles/Style";
+import {
+  openDatabase,
+  insertBook,
+} from "../controllers/db";
 
 export default function Home({ navigation }) {
+
+  const musicBooks = async () => {
+    const db = await openDatabase();
+
+    //TODO: Load data into the cards
+    const allRows = await db.getAllAsync(`SELECT * FROM musicbooks`);
+    for(const row of allRows){
+      console.log(row.id, row.title, row.book, row.blz);
+      console.log("test");
+    }
+  };
+
+  musicBooks();
+
   //TODO: Voorbeeld data voor de style. Uiteindelijk moet dit met een API gaan werken.
   const [data] = useState([
     { id: "1", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
