@@ -24,13 +24,12 @@ export default function Add() {
   useEffect(() => {
     const setupDatabase = async () => {
       try{
-      //TODO: The database doesn't seem to open (getting null object). We have to fix this.
       const dbInstance = await openDatabase();
       setDb(dbInstance);
       createTable(dbInstance);
       }catch(error){
-        //setError(error.message);
-        //console.error("Failed to open database: " + error);
+        setError(error.message);
+        console.error("Failed to open database: " + error);
       }
     };
 

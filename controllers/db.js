@@ -1,27 +1,37 @@
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from "expo-sqlite";
 
 export const openDatabase = async () => {
-  try{
+  try {
     const db = await SQLite.openDatabaseAsync("musicbookdatabase.db");
     console.log("Database opened");
     return db;
-  }catch(error){
+  } catch (error) {
     console.error("Database failed to open", error);
-    throw(error);
+    throw error;
   }
 };
 
-//TODO: Creating table and insert data.
+export const createTable = async (db) => {
+  //console.log(db);
+  try {
+    await db.execAsync(`CREATE TABLE IF NOT EXISTS musicbooks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, book TEXT, blz INTEGER);`);
+    console.log("Table succesfully created.");
+  } catch (error) {
+    console.error("There was an error", error);
+  }
+};
 
-// export const createTable = async () => {
-//     try{
-//       await db.execAsync(`CREATE TABLE IF NOT EXISTS musicbooks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, book TEXT, blz INTEGER);`);
-//       console.log("Table succesfully created.");
-//     }
-//     catch(error){
-//       console.error("There was an error", error);
-//     }
-// };
+export const insertBook = async (db, title, book, blz) => {
+  try{
+    const query = `INSERT INTO musicbooks (title, book, blz) VALUES (${title}, ${book}, ${blz})`;
+    console.log(query);
+    await db.execAsync(`INSERT INTO musicbooks (title, book, blz) VALUES ('${title}', '${book}', '${blz}')`);
+    console.log("Book saved succesfully!");
+  } catch (error){
+    console.error("There was an error", error);
+  }
+
+}
 
 //TODO: Underneath code might be neccssary when installing the app on the real device.
 
