@@ -10,21 +10,32 @@ import { Icon } from "@rneui/themed";
 import mainStyle from "../styles/Style";
 import {
   openDatabase,
-  insertBook,
+  selectMusicBooks,
 } from "../controllers/db";
 
 export default function Home({ navigation }) {
 
   const musicBooks = async () => {
-    const db = await openDatabase();
+    try {
+      const db = await openDatabase();
+      let books = await selectMusicBooks(db);
 
-    //TODO: Load data into the cards
-    const allRows = await db.getAllAsync(`SELECT * FROM musicbooks`);
-    for(const row of allRows){
-      console.log(row.id, row.title, row.book, row.blz);
-      console.log("test");
+      //console.log("Books loaded: " + books);
+
+      //TODO: Put book in an array and load into the cards
+      for(const book of books){
+        console.log(book);
+      }
+
+    } catch (error) {
+      console.error("Error loading books: ", error);
     }
   };
+
+  // for(const row of allRows){
+  //   console.log(row.id, row.title, row.book, row.blz);
+  //   console.log("test");
+  // }
 
   musicBooks();
 

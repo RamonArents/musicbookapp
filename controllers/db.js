@@ -23,14 +23,36 @@ export const createTable = async (db) => {
 
 export const insertBook = async (db, title, book, blz) => {
   try{
-    const query = `INSERT INTO musicbooks (title, book, blz) VALUES (${title}, ${book}, ${blz})`;
-    console.log(query);
+    //const query = `INSERT INTO musicbooks (title, book, blz) VALUES (${title}, ${book}, ${blz})`;
+    //console.log(query);
     await db.execAsync(`INSERT INTO musicbooks (title, book, blz) VALUES ('${title}', '${book}', '${blz}')`);
     console.log("Book saved succesfully!");
   } catch (error){
     console.error("There was an error", error);
   }
 
+}
+
+export const selectMusicBooks = async (db) => {
+
+  let bookArray = [];
+
+  try{
+    //const query = `SELECT * FROM musicbooks`;
+    //console.log(query);
+    const books = await db.getAllAsync(`SELECT * FROM musicbooks`);
+    
+    for(const book of books){
+      //console.log(book);
+      bookArray.push(book);
+    }
+
+    //console.log(bookArray);
+  } catch (error){
+    console.error("There was an error", error);
+  }
+
+  return bookArray;
 }
 
 //TODO: Underneath code might be neccssary when installing the app on the real device.
