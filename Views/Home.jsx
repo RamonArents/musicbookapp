@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -14,41 +14,43 @@ import {
 } from "../controllers/db";
 
 export default function Home({ navigation }) {
+  //const [data, setData] = useState([]);
 
-  const musicBooks = async () => {
+  let musicBooks = async () => {
+
+    let bookArray = [];
+
     try {
       const db = await openDatabase();
       let books = await selectMusicBooks(db);
 
-      //console.log("Books loaded: " + books);
-
-      //TODO: Put book in an array and load into the cards
       for(const book of books){
-        console.log(book);
+        //console.log(book.id);
+        bookArray.push(book.id, book.title, book.book, book.blz);
       }
 
     } catch (error) {
       console.error("Error loading books: ", error);
     }
+
+    //console.log(bookArray);
+    return bookArray;
   };
 
-  // for(const row of allRows){
-  //   console.log(row.id, row.title, row.book, row.blz);
-  //   console.log("test");
-  // }
+  //TODO: Nog uitzoeken hoe we hier de data op de juiste manier kunnen krijgen in de cards
+  const [data] = useState([musicBooks()]);
 
-  musicBooks();
 
   //TODO: Voorbeeld data voor de style. Uiteindelijk moet dit met een API gaan werken.
-  const [data] = useState([
-    { id: "1", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
-    { id: "2", title: "Apache", book: "New West", blz: "20" },
-    { id: "3", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
-    { id: "4", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
-    { id: "5", title: "Apache", book: "New West", blz: "20" },
-    { id: "6", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
-    { id: "7", title: "Apache", book: "New West", blz: "20" },
-  ]);
+  // const [data] = useState([
+  //   { id: "1", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
+  //   { id: "2", title: "Apache", book: "New West", blz: "20" },
+  //   { id: "3", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
+  //   { id: "4", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
+  //   { id: "5", title: "Apache", book: "New West", blz: "20" },
+  //   { id: "6", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
+  //   { id: "7", title: "Apache", book: "New West", blz: "20" },
+  // ]);
 
   const handleOnPress = () => {
     navigation.navigate("Add");
