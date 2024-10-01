@@ -4,54 +4,51 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
+  Text,
 } from "react-native";
 import SearchComponent from "../components/Search";
 import { Icon } from "@rneui/themed";
 import mainStyle from "../styles/Style";
-import {
-  openDatabase,
-  selectMusicBooks,
-} from "../controllers/db";
+import { openDatabase, selectMusicBooks } from "../controllers/db";
 
 export default function Home({ navigation }) {
-  //const [data, setData] = useState([]);
+  //State for holding book data and loading indicator
+  const [bookArray, setBookArray] = useState([]); 
+  const [loading, setLoading] = useState(true);
 
-  let musicBooks = async () => {
-
-    let bookArray = [];
-
+  //Function to load the music books from the db
+  const loadMusicBooks = async () => {
     try {
+      //get data from db
       const db = await openDatabase();
       let books = await selectMusicBooks(db);
-
-      for(const book of books){
-        //console.log(book.id);
-        bookArray.push(book.id, book.title, book.book, book.blz);
-      }
-
+      //set the data into the array
+      setBookArray(books);
     } catch (error) {
       console.error("Error loading books: ", error);
+    } finally {
+      //No loading indicator when finished
+      setLoading(false);
     }
-
-    //console.log(bookArray);
-    return bookArray;
   };
 
-  //TODO: Nog uitzoeken hoe we hier de data op de juiste manier kunnen krijgen in de cards
-  const [data] = useState([musicBooks()]);
+  //Call function loadMusicBooks in useEffect
+  useEffect(() => {
+    loadMusicBooks();
+  }, []);
 
-
-  //TODO: Voorbeeld data voor de style. Uiteindelijk moet dit met een API gaan werken.
-  // const [data] = useState([
-  //   { id: "1", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
-  //   { id: "2", title: "Apache", book: "New West", blz: "20" },
-  //   { id: "3", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
-  //   { id: "4", title: "Wisen Rosen", book: "Keyboard speel je zo", blz: "10" },
-  //   { id: "5", title: "Apache", book: "New West", blz: "20" },
-  //   { id: "6", title: "Sweet Caroline", book: "Neil Diamond", blz: "130" },
-  //   { id: "7", title: "Apache", book: "New West", blz: "20" },
-  // ]);
-
+  //Loading indicator
+  if (loading) {
+    return (
+      <View>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading Books...</Text>
+      </View>
+    );
+  }
+  
+  //To Add page
   const handleOnPress = () => {
     navigation.navigate("Add");
   };
@@ -63,7 +60,7 @@ export default function Home({ navigation }) {
         style={mainStyle.background}
       >
         <View style={mainStyle.overlay}>
-          <SearchComponent data={data} navigation={navigation} />
+          <SearchComponent data={bookArray} navigation={navigation} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.buttonAdd} onPress={handleOnPress}>
               <Icon name="add" size={24} color="white" />
