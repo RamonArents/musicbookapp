@@ -26,6 +26,7 @@ export default function Add() {
       setBook("");
       setBlz("");
 
+      /* TODO: Give user feedback (snackbar) that the data was saved */
       console.log("Book saved succesfully");
     } catch (error) {
       console.error("Error saving book: ", error);

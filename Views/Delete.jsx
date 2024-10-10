@@ -9,7 +9,8 @@ import mainStyle from "../styles/Style";
 
 export default function Delete({ route }) {
   const { title, description, blz } = route.params;
-
+  
+  /* TODO: Give user feedback (snackbar) that the data was saved */
   return (
     <View style={mainStyle.flex1}>
       <ImageBackground

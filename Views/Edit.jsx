@@ -19,9 +19,14 @@ export default function Edit({ route }) {
   const handleOnPress = async () => {
     try {
       const db = await openDatabase();
-      await updateBook(db, id, title, book, blz);
+
+      //Check if blz is numeric and replace non-numeric characters with an empty string
+      const blzInNumbers = updateBlz.replace(/[^0-9]/g,"");
+
+      await updateBook(db, id, updateTitle, updateTheBook, blzInNumbers);
 
       console.log("Book updated succesfully");
+      /* TODO: Give user feedback (snackbar) that the data was saved */
     } catch (error) {
       console.error("Error updating book: ", error);
     }
@@ -40,7 +45,7 @@ export default function Edit({ route }) {
             <Text style={[styles.labels, styles.colorWhite]}>Boek:</Text>
             <TextInput style={styles.input} placeholder="Boek" value={updateTheBook} onChangeText={setBook} />
             <Text style={[styles.labels, styles.colorWhite]}>Bladzijde:</Text>
-            <TextInput style={styles.input} placeholder="Blz" value={updateBlz} onChangeText={setBlz} />
+            <TextInput keyboardType="numeric" style={styles.input} placeholder="Blz" value={updateBlz} onChangeText={setBlz} />
             <TouchableOpacity style={styles.button} onPress={handleOnPress}>
               <Text style={styles.colorWhite}>Bewerken</Text>
             </TouchableOpacity>
