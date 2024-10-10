@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import mainStyle from "../styles/Style";
 
-export default function Card({ title, description, blz, navigation }) {
+export default function Card({ id, title, book, blz, navigation }) {
   const handleEdit = () => {
-    navigation.navigate("Edit", { title, description, blz });
+    navigation.navigate("Edit", { id, title, book, blz });
   };
 
   const handleDelete = () => {
-    navigation.navigate("Delete", { title, description, blz });
+    navigation.navigate("Delete", { id, title, book, blz });
   };
 
   return (
@@ -31,7 +31,7 @@ export default function Card({ title, description, blz, navigation }) {
       </View>
       <View style={[styles.textContainer, mainStyle.flex1]}>
         <Text style={[styles.title, mainStyle.colorWhite]}>{title}</Text>
-        <Text style={[styles.description, mainStyle.colorWhite]}>{description}</Text>
+        <Text style={[styles.description, mainStyle.colorWhite]}>{book}</Text>
         <Text style={[styles.description, mainStyle.colorWhite]}>{blz}</Text>
       </View>
     </View>

@@ -55,6 +55,18 @@ export const selectMusicBooks = async (db) => {
   return bookArray;
 }
 
+export const updateBook = async (db, id, title, book, blz) => {
+  try{
+    const query = `UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`;
+    console.log(query);
+    await db.execAsync(`UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`);
+    console.log("Book updated succesfully!");
+  } catch (error){
+    console.error("There was an error", error);
+  }
+
+}
+
 //TODO: Underneath code might be neccssary when installing the app on the real device.
 
 // import SQLite from "react-native-sqlite-storage";

@@ -21,7 +21,7 @@ export default function SearchComponent({ data, navigation }) {
       (item) =>
         item.title.toLowerCase().includes(text.toLowerCase()) ||
         item.book.toLowerCase().includes(text.toLowerCase()) ||
-        item.blz.toLowerCase().includes(text.toLowerCase())
+        item.blz.toString().toLowerCase().includes(text.toLowerCase())
     );
     setSearchQuery(text);
     setFilteredData(filtered);
@@ -45,9 +45,10 @@ export default function SearchComponent({ data, navigation }) {
           data={filteredData}
           renderItem={({ item }) => (
             <Card
+              id={item.id}
               title={item.title}
-              description={"Boek: " + item.book}
-              blz={"blz " + item.blz}
+              book={item.book}
+              blz={item.blz}
               navigation={navigation}
             />
           )}

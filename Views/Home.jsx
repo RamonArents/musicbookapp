@@ -18,6 +18,7 @@ export default function Home({ navigation }) {
   const [loading, setLoading] = useState(true);
 
   //Function to load the music books from the db
+  //TODO: When returning from edit or add page the data doesn't show. This needs to be solved
   const loadMusicBooks = async () => {
     try {
       //get data from db
