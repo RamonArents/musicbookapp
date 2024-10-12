@@ -8,7 +8,32 @@ import {
 import mainStyle from "../styles/Style";
 
 export default function Delete({ route }) {
-  const { title, book, blz } = route.params;
+  const { id, title, book, blz } = route.params;
+
+  const handleOnPress = async () => {
+    try {
+      const db = await openDatabase();
+
+      //TODO: Delete query hier aanroepen
+
+      console.log("Book deleted succesfully");
+      Toast.show(
+        "Boek succesvol verwijderd.", {
+          duration: Toast.durations.LONG,
+          backgroundColor:"#047838",
+        }
+      )
+
+    } catch (error) {
+      Toast.show(
+        "Er ging iets mis. Foutmelding: " + error, {
+          duration: Toast.durations.LONG,
+          backgroundColor:"#d10202",
+        }
+      )
+      console.error("Error deleting book: ", error);
+    }
+  };
   
   /* TODO: Give user feedback (snackbar) that the data was saved */
   return (
@@ -27,7 +52,7 @@ export default function Delete({ route }) {
               <Text style={[styles.deleteText, mainStyle.colorWhite]}>Boek: {book}</Text>
               <Text style={[styles.deleteText, mainStyle.colorWhite]}>Bladzijde: {blz}</Text>
             </View>
-            <TouchableOpacity style={mainStyle.button}>
+            <TouchableOpacity style={mainStyle.button} onPress={handleOnPress}>
               <Text style={mainStyle.colorWhite}>Verwijderen</Text>
             </TouchableOpacity>
           </View>

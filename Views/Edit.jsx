@@ -8,6 +8,7 @@ import {
 import styles from "../styles/Style";
 import { openDatabase, updateBook } from "../controllers/db";
 import { useState } from "react";
+import Toast from 'react-native-root-toast';
 
 export default function Edit({ route }) {
   const { id, title, book, blz } = route.params;
@@ -26,8 +27,20 @@ export default function Edit({ route }) {
       await updateBook(db, id, updateTitle, updateTheBook, blzInNumbers);
 
       console.log("Book updated succesfully");
-      /* TODO: Give user feedback (snackbar) that the data was saved */
+      Toast.show(
+        "Boek succesvol bijgewerkt", {
+          duration: Toast.durations.LONG,
+          backgroundColor:"#047838",
+        }
+      )
+
     } catch (error) {
+      Toast.show(
+        "Er ging iets mis. Foutmelding: " + error, {
+          duration: Toast.durations.LONG,
+          backgroundColor:"#d10202",
+        }
+      )
       console.error("Error updating book: ", error);
     }
   };
