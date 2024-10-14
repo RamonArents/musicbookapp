@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,7 +11,6 @@ import SearchComponent from "../components/Search";
 import { Icon } from "@rneui/themed";
 import mainStyle from "../styles/Style";
 import { openDatabase, selectMusicBooks } from "../controllers/db";
-import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home({ navigation }) {
   //State for holding book data and loading indicator

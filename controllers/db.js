@@ -57,8 +57,8 @@ export const selectMusicBooks = async (db) => {
 
 export const updateBook = async (db, id, title, book, blz) => {
   try{
-    const query = `UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`;
-    console.log(query);
+    // const query = `UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`;
+    // console.log(query);
     await db.execAsync(`UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`);
     console.log("Book updated succesfully!");
   } catch (error){

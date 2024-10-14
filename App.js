@@ -9,7 +9,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { openDatabase, createTable } from "./controllers/db";
-import { RootSiblingParent } from "react-native-root-siblings";
 
 export default function App() {
   const [db, setDb] = useState(null);
@@ -33,7 +32,6 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <RootSiblingParent>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -74,7 +72,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </RootSiblingParent>
   );
 }
 

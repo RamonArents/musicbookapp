@@ -1,7 +1,4 @@
-import {
-  openDatabase,
-  insertBook,
-} from "../controllers/db";
+import { openDatabase, insertBook } from "../controllers/db";
 import {
   TextInput,
   View,
@@ -11,7 +8,7 @@ import {
 } from "react-native";
 import styles from "../styles/Style";
 import { useState } from "react";
-
+import Toast from 'react-native-root-toast';
 
 export default function Add() {
   const [title, setTitle] = useState("");
@@ -26,9 +23,16 @@ export default function Add() {
       setBook("");
       setBlz("");
 
-      /* TODO: Give user feedback (snackbar) that the data was saved */
       console.log("Book saved succesfully");
+      Toast.show("Boek succesvol bijgewerkt", {
+        duration: Toast.durations.LONG,
+        backgroundColor: "#047838",
+      });
     } catch (error) {
+      Toast.show("Er ging iets mis. Foutmelding: " + error, {
+        duration: Toast.durations.LONG,
+        backgroundColor: "#d10202",
+      });
       console.error("Error saving book: ", error);
     }
   };
