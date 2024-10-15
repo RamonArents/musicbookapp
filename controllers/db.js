@@ -46,7 +46,7 @@ export const selectMusicBooks = async (db) => {
       //console.log(book);
       bookArray.push(book);
     }
-
+    console.log("Books loaded");
     //console.log(bookArray);
   } catch (error){
     console.error("There was an error", error);

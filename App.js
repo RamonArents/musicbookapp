@@ -8,7 +8,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { openDatabase, createTable } from "./controllers/db";
+import { openDatabase, createTable, selectMusicBooks } from "./controllers/db";
 
 export default function App() {
   const [db, setDb] = useState(null);

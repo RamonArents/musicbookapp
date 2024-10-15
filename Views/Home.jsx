@@ -11,33 +11,50 @@ import SearchComponent from "../components/Search";
 import { Icon } from "@rneui/themed";
 import mainStyle from "../styles/Style";
 import { openDatabase, selectMusicBooks } from "../controllers/db";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home({ navigation }) {
   //State for holding book data and loading indicator
-  const [bookArray, setBookArray] = useState([]); 
+  const [bookArray, setBookArray] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isMounted = useRef(true); // Check if component is mounted
 
   //Function to load the music books from the db
-  //TODO: When returning from edit or add page the data doesn't show. This needs to be solved
   const loadMusicBooks = async () => {
     try {
       //get data from db
       const db = await openDatabase();
       let books = await selectMusicBooks(db);
-      //set the data into the array
-      setBookArray(books);
+      //set the data into the array when component is mounted
+      if (isMounted.current) {
+        setBookArray(books);
+      }
     } catch (error) {
       console.error("Error loading books: ", error);
     } finally {
-      //No loading indicator when finished
-      setLoading(false);
+      //No loading indicator when finished and component is mounted
+      if (isMounted.current) {
+        setLoading(false);
+      }
     }
+    //TODO: This prints correctly when returning to page, but not in the useFocusEffect callback. Have to find out to refresh data correctly
+    console.log(bookArray);
   };
 
   //Call function loadMusicBooks in useEffect
-  useEffect(() => {
-    loadMusicBooks();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("mounted");
+      isMounted.current = true;
+      loadMusicBooks();
+
+      //Cleanup when component unmounts
+      return () => {
+        console.log("unmounted");
+        isMounted.current = false;
+      };
+    }, [])
+  );
 
   //Loading indicator
   if (loading) {
@@ -48,7 +65,7 @@ export default function Home({ navigation }) {
       </View>
     );
   }
-  
+
   //To Add page
   const handleOnPress = () => {
     navigation.navigate("Add");
