@@ -1,3 +1,4 @@
+import { openDatabase, deleteBook } from "../controllers/db";
 import {
   View,
   StyleSheet,
@@ -6,6 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import mainStyle from "../styles/Style";
+import Toast from 'react-native-root-toast';
 
 export default function Delete({ route }) {
   const { id, title, book, blz } = route.params;
@@ -14,43 +16,49 @@ export default function Delete({ route }) {
     try {
       const db = await openDatabase();
 
-      //TODO: Delete query hier aanroepen
+      await deleteBook(db, id);
 
       console.log("Book deleted succesfully");
-      Toast.show(
-        "Boek succesvol verwijderd.", {
-          duration: Toast.durations.LONG,
-          backgroundColor:"#047838",
-        }
-      )
-
+      Toast.show("Boek succesvol verwijderd.", {
+        duration: Toast.durations.LONG,
+        backgroundColor: "#047838",
+      });
     } catch (error) {
-      Toast.show(
-        "Er ging iets mis. Foutmelding: " + error, {
-          duration: Toast.durations.LONG,
-          backgroundColor:"#d10202",
-        }
-      )
+      Toast.show("Er ging iets mis. Foutmelding: " + error, {
+        duration: Toast.durations.LONG,
+        backgroundColor: "#d10202",
+      });
       console.error("Error deleting book: ", error);
     }
   };
-  
-  /* TODO: Give user feedback (snackbar) that the data was saved */
+
   return (
     <View style={mainStyle.flex1}>
       <ImageBackground
         source={require("../assets/images/background.jpg")}
         style={mainStyle.background}
       >
-        <View style={[mainStyle.overlay, styles.overlayDelete, styles.overlayPosition]}>
+        <View
+          style={[
+            mainStyle.overlay,
+            styles.overlayDelete,
+            styles.overlayPosition,
+          ]}
+        >
           <View style={mainStyle.form}>
             <Text style={[mainStyle.labels, mainStyle.colorWhite]}>
               Weet je zeker dat je dit liedje wil verwijderen?
             </Text>
             <View style={styles.deleteTextContainer}>
-              <Text style={[styles.deleteText, mainStyle.colorWhite]}>Titel: {title}</Text>
-              <Text style={[styles.deleteText, mainStyle.colorWhite]}>Boek: {book}</Text>
-              <Text style={[styles.deleteText, mainStyle.colorWhite]}>Bladzijde: {blz}</Text>
+              <Text style={[styles.deleteText, mainStyle.colorWhite]}>
+                Titel: {title}
+              </Text>
+              <Text style={[styles.deleteText, mainStyle.colorWhite]}>
+                Boek: {book}
+              </Text>
+              <Text style={[styles.deleteText, mainStyle.colorWhite]}>
+                Bladzijde: {blz}
+              </Text>
             </View>
             <TouchableOpacity style={mainStyle.button} onPress={handleOnPress}>
               <Text style={mainStyle.colorWhite}>Verwijderen</Text>

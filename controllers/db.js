@@ -14,7 +14,9 @@ export const openDatabase = async () => {
 export const createTable = async (db) => {
   //console.log(db);
   try {
-    await db.execAsync(`CREATE TABLE IF NOT EXISTS musicbooks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, book TEXT, blz INTEGER);`);
+    await db.execAsync(
+      "CREATE TABLE IF NOT EXISTS musicbooks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, book TEXT, blz INTEGER);"
+    );
     console.log("Table succesfully created.");
   } catch (error) {
     console.error("There was an error", error);
@@ -22,50 +24,60 @@ export const createTable = async (db) => {
 };
 
 export const insertBook = async (db, title, book, blz) => {
-  try{
+  try {
     //const query = `INSERT INTO musicbooks (title, book, blz) VALUES (${title}, ${book}, ${blz})`;
     //console.log(query);
-    await db.execAsync(`INSERT INTO musicbooks (title, book, blz) VALUES ('${title}', '${book}', '${blz}')`);
+    await db.runAsync(
+      "INSERT INTO musicbooks (title, book, blz) VALUES (?, ?, ?)", title, book, blz
+    );
     console.log("Book saved succesfully!");
-  } catch (error){
+  } catch (error) {
     console.error("There was an error", error);
   }
-
-}
+};
 
 export const selectMusicBooks = async (db) => {
-
   let bookArray = [];
 
-  try{
+  try {
     //const query = `SELECT * FROM musicbooks`;
     //console.log(query);
-    const books = await db.getAllAsync(`SELECT * FROM musicbooks`);
-    
-    for(const book of books){
+    const books = await db.getAllAsync("SELECT * FROM musicbooks");
+
+    for (const book of books) {
       //console.log(book);
       bookArray.push(book);
     }
     console.log("Books loaded");
     //console.log(bookArray);
-  } catch (error){
+  } catch (error) {
     console.error("There was an error", error);
   }
 
   return bookArray;
-}
+};
 
 export const updateBook = async (db, id, title, book, blz) => {
-  try{
+  try {
     // const query = `UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`;
     // console.log(query);
-    await db.execAsync(`UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`);
+    await db.runAsync(
+      "UPDATE musicbooks SET title = ?, book = ?, blz = ? WHERE id = ?", title, book, blz, id
+    );
     console.log("Book updated succesfully!");
-  } catch (error){
+  } catch (error) {
     console.error("There was an error", error);
   }
+};
 
-}
+export const deleteBook = async (db, id) => {
+  try {
+    await db.runAsync("DELETE FROM musicbooks WHERE id = ?", id);
+    console.log("Book deleted succesfully!");
+  } catch (error) {
+    console.error("There was an error", error);
+  }
+};
 
 //TODO: Underneath code might be neccssary when installing the app on the real device.
 
