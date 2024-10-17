@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import mainStyle from "../styles/Style";
 import Toast from 'react-native-root-toast';
+import { useNavigation } from "@react-navigation/native";
 
 export default function Delete({ route }) {
+  const navigation = useNavigation();
   const { id, title, book, blz } = route.params;
 
   const handleOnPress = async () => {
@@ -23,6 +25,9 @@ export default function Delete({ route }) {
         duration: Toast.durations.LONG,
         backgroundColor: "#047838",
       });
+
+      navigation.navigate("Home");
+
     } catch (error) {
       Toast.show("Er ging iets mis. Foutmelding: " + error, {
         duration: Toast.durations.LONG,
