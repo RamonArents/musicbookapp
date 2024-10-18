@@ -1,9 +1,13 @@
 import * as SQLite from "expo-sqlite";
 
+/**
+ * Function to return db instance
+ * @returns db - The instance of the database
+ */
 export const openDatabase = async () => {
+  //Try to open database. Give error on failure.
   try {
     const db = await SQLite.openDatabaseAsync("musicbookdatabase.db");
-    console.log("Database opened");
     return db;
   } catch (error) {
     console.error("Database failed to open", error);
@@ -11,69 +15,97 @@ export const openDatabase = async () => {
   }
 };
 
+/**
+ * Creates table musicbooks if it does not exists
+ * @param {*} db - Instance of the database
+ */
 export const createTable = async (db) => {
-  //console.log(db);
+  //Try to create table. Give error on failure.
   try {
     await db.execAsync(
       "CREATE TABLE IF NOT EXISTS musicbooks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, book TEXT, blz INTEGER);"
     );
-    console.log("Table succesfully created.");
   } catch (error) {
     console.error("There was an error", error);
   }
 };
 
+/**
+ * Insert a new record in the musicbooks database
+ * @param {*} db - Instance of the database
+ * @param {*} title - Title of the song
+ * @param {*} book - Title of the book
+ * @param {*} blz - Page number of the book
+ */
 export const insertBook = async (db, title, book, blz) => {
+  //Try to insert new record into the database. Give error on failure.
   try {
-    //const query = `INSERT INTO musicbooks (title, book, blz) VALUES (${title}, ${book}, ${blz})`;
-    //console.log(query);
     await db.runAsync(
-      "INSERT INTO musicbooks (title, book, blz) VALUES (?, ?, ?)", title, book, blz
+      "INSERT INTO musicbooks (title, book, blz) VALUES (?, ?, ?)",
+      title,
+      book,
+      blz
     );
-    console.log("Book saved succesfully!");
   } catch (error) {
     console.error("There was an error", error);
   }
 };
 
+/**
+ * Select all records from the musicbooks database
+ * @param {*} db - Instance of the database
+ * @returns Array with all record of the musicbooks database
+ */
 export const selectMusicBooks = async (db) => {
+  //Array to store the records in
   let bookArray = [];
-
+  //Try to select all record. Give error on failure.
   try {
-    //const query = `SELECT * FROM musicbooks`;
-    //console.log(query);
     const books = await db.getAllAsync("SELECT * FROM musicbooks");
 
+    //Loop trough the data and insert into the bookArray
     for (const book of books) {
-      //console.log(book);
       bookArray.push(book);
     }
-    console.log("Books loaded");
-    //console.log(bookArray);
   } catch (error) {
     console.error("There was an error", error);
   }
-
+  //Return the bookArray
   return bookArray;
 };
 
+/**
+ * Updates a record from the musicbook database
+ * @param {*} db - Instance of the database
+ * @param {*} id - The id of the record that will be updated
+ * @param {*} title - The title of the song
+ * @param {*} book - The title of the book
+ * @param {*} blz - Page number of the book
+ */
 export const updateBook = async (db, id, title, book, blz) => {
+  //Try to update book. Give error on failure.
   try {
-    // const query = `UPDATE musicbooks SET title = '${title}', book = '${book}', blz = '${blz}' WHERE id = ${id}`;
-    // console.log(query);
     await db.runAsync(
-      "UPDATE musicbooks SET title = ?, book = ?, blz = ? WHERE id = ?", title, book, blz, id
+      "UPDATE musicbooks SET title = ?, book = ?, blz = ? WHERE id = ?",
+      title,
+      book,
+      blz,
+      id
     );
-    console.log("Book updated succesfully!");
   } catch (error) {
     console.error("There was an error", error);
   }
 };
 
+/**
+ * Deletes a record from the database
+ * @param {*} db - Instance of the database
+ * @param {*} id - The id of the book that should be deleted
+ */
 export const deleteBook = async (db, id) => {
+  //Try to delete a book. Give error on failure.
   try {
     await db.runAsync("DELETE FROM musicbooks WHERE id = ?", id);
-    console.log("Book deleted succesfully!");
   } catch (error) {
     console.error("There was an error", error);
   }

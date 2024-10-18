@@ -20,7 +20,7 @@ export default function Home({ navigation }) {
   //Function to load the music books from the db
   const loadMusicBooks = async () => {
     try {
-      //get data from db
+      //get data from db.js
       const db = await openDatabase();
       let books = await selectMusicBooks(db);
       //set the data into the array

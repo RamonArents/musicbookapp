@@ -8,39 +8,39 @@ import {
 import styles from "../styles/Style";
 import { openDatabase, updateBook } from "../controllers/db";
 import { useState } from "react";
-import Toast from 'react-native-root-toast';
+import Toast from "react-native-root-toast";
 
 export default function Edit({ route }) {
+  //Route variables
   const { id, title, book, blz } = route.params;
-
+  //State variables
   const [updateTitle, setTitle] = useState(title);
   const [updateTheBook, setBook] = useState(book);
   const [updateBlz, setBlz] = useState(blz);
 
+  //Function to update a record from the database
   const handleOnPress = async () => {
     try {
+      //Call openDatabase from db.js
       const db = await openDatabase();
 
       //Check if blz is numeric and replace non-numeric characters with an empty string
-      const blzInNumbers = updateBlz.replace(/[^0-9]/g,"");
+      const blzInNumbers = updateBlz.replace(/[^0-9]/g, "");
 
+      //Call update book from db.js
       await updateBook(db, id, updateTitle, updateTheBook, blzInNumbers);
 
-      console.log("Book updated succesfully");
-      Toast.show(
-        "Boek succesvol bijgewerkt", {
-          duration: Toast.durations.LONG,
-          backgroundColor:"#047838",
-        }
-      )
-
+      //Show success message
+      Toast.show("Boek succesvol bijgewerkt", {
+        duration: Toast.durations.LONG,
+        backgroundColor: "#047838",
+      });
     } catch (error) {
-      Toast.show(
-        "Er ging iets mis. Foutmelding: " + error, {
-          duration: Toast.durations.LONG,
-          backgroundColor:"#d10202",
-        }
-      )
+      //Show error
+      Toast.show("Er ging iets mis. Foutmelding: " + error, {
+        duration: Toast.durations.LONG,
+        backgroundColor: "#d10202",
+      });
       console.error("Error updating book: ", error);
     }
   };
@@ -54,11 +54,27 @@ export default function Edit({ route }) {
         <View style={[styles.overlay, styles.overlayPosition]}>
           <View style={styles.form}>
             <Text style={[styles.labels, styles.colorWhite]}>Titel:</Text>
-            <TextInput style={styles.input} placeholder="Titel" value={updateTitle} onChangeText={setTitle} />
+            <TextInput
+              style={styles.input}
+              placeholder="Titel"
+              value={updateTitle}
+              onChangeText={setTitle}
+            />
             <Text style={[styles.labels, styles.colorWhite]}>Boek:</Text>
-            <TextInput style={styles.input} placeholder="Boek" value={updateTheBook} onChangeText={setBook} />
+            <TextInput
+              style={styles.input}
+              placeholder="Boek"
+              value={updateTheBook}
+              onChangeText={setBook}
+            />
             <Text style={[styles.labels, styles.colorWhite]}>Bladzijde:</Text>
-            <TextInput keyboardType="numeric" style={styles.input} placeholder="Blz" value={updateBlz} onChangeText={setBlz} />
+            <TextInput
+              keyboardType="numeric"
+              style={styles.input}
+              placeholder="Blz"
+              value={updateBlz}
+              onChangeText={setBlz}
+            />
             <TouchableOpacity style={styles.button} onPress={handleOnPress}>
               <Text style={styles.colorWhite}>Bewerken</Text>
             </TouchableOpacity>

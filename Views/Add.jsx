@@ -8,27 +8,33 @@ import {
 } from "react-native";
 import styles from "../styles/Style";
 import { useState } from "react";
-import Toast from 'react-native-root-toast';
+import Toast from "react-native-root-toast";
 
 export default function Add() {
+  //State variables
   const [title, setTitle] = useState("");
   const [book, setBook] = useState("");
   const [blz, setBlz] = useState("");
 
+  //Function to insert data into the database
   const handleOnPress = async () => {
     try {
+      //Call openDatabase from db.js
       const db = await openDatabase();
+      //Call insertBook from db.js
       await insertBook(db, title, book, blz);
+      //Clear fields
       setTitle("");
       setBook("");
       setBlz("");
 
-      console.log("Book saved succesfully");
+      //Show success message
       Toast.show("Boek succesvol bijgewerkt", {
         duration: Toast.durations.LONG,
         backgroundColor: "#047838",
       });
     } catch (error) {
+      //Show error
       Toast.show("Er ging iets mis. Foutmelding: " + error, {
         duration: Toast.durations.LONG,
         backgroundColor: "#d10202",

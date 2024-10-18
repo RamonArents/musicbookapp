@@ -12,10 +12,12 @@ import mainStyle from "../styles/Style";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function SearchComponent({ data, navigation }) {
+  //State variables
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(data);
   const [refreshing, setRefreshing] = useState(false);
 
+  //Function to search for a certain record
   const handleSearch = (text) => {
     if (typeof text !== "string") return;
 
@@ -29,6 +31,7 @@ export default function SearchComponent({ data, navigation }) {
     setFilteredData(filtered);
   };
 
+  //Function to refresh the page (by scrolling top down on flatlist)
   const onRefresh = () => {
     setRefreshing(true);
 
@@ -38,11 +41,12 @@ export default function SearchComponent({ data, navigation }) {
     setRefreshing(false);
   };
 
+  //Refresh page directly when screen comes in focus
   useFocusEffect(
-    useCallback(() => { 
+    useCallback(() => {
       onRefresh();
     }, [data])
-  )
+  );
 
   return (
     <View style={[styles.container, mainStyle.flex1]}>

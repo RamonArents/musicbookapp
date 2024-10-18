@@ -35,13 +35,14 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 5,
   },
   colorWhite: {
     color: "#fff",
   },
   flex1: {
-    flex:1,
-  }
+    flex: 1,
+  },
 });
 
 export default styles;

@@ -8,70 +8,66 @@ import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { openDatabase, createTable, selectMusicBooks } from "./controllers/db";
+import { openDatabase, createTable } from "./controllers/db";
 
 export default function App() {
-  const [db, setDb] = useState(null);
-  const [error, setError] = useState(null);
-
+  //Create db on startup of the app
   useEffect(() => {
     const setupDatabase = async () => {
       try {
-        const dbInstance = await openDatabase();
-        setDb(dbInstance);
-        createTable(dbInstance);
+        //Open database from db.js and create table if it does not exist
+        const db = await openDatabase();
+        createTable(db);
       } catch (error) {
-        setError(error.message);
-        console.error("Failed to open database: " + error);
+        //Error message
+        console.error("Failed to open database: ", error);
       }
     };
-
+    //Function call
     setupDatabase();
   }, []);
 
   const Stack = createNativeStackNavigator();
 
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            options={{
-              header: () => (
-                <View style={styles.header}>
-                  <Text style={styles.headerText}>Muziek Boeken</Text>
-                </View>
-              ),
-            }}
-            component={Home}
-          />
-          <Stack.Screen
-            name="Add"
-            options={({ navigation }) => ({
-              header: () => (
-                <Header navigation={navigation} title="Toevoegen" />
-              ),
-            })}
-            component={Add}
-          />
-          <Stack.Screen
-            name="Edit"
-            options={({ navigation }) => ({
-              header: () => <Header navigation={navigation} title="Bewerken" />,
-            })}
-            component={Edit}
-          />
-          <Stack.Screen
-            name="Delete"
-            options={({ navigation }) => ({
-              header: () => (
-                <Header navigation={navigation} title="Verwijderen" />
-              ),
-            })}
-            component={Delete}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          options={{
+            header: () => (
+              <View style={styles.header}>
+                <Text style={styles.headerText}>Muziek Boeken</Text>
+              </View>
+            ),
+          }}
+          component={Home}
+        />
+        <Stack.Screen
+          name="Add"
+          options={({ navigation }) => ({
+            header: () => <Header navigation={navigation} title="Toevoegen" />,
+          })}
+          component={Add}
+        />
+        <Stack.Screen
+          name="Edit"
+          options={({ navigation }) => ({
+            header: () => <Header navigation={navigation} title="Bewerken" />,
+          })}
+          component={Edit}
+        />
+        <Stack.Screen
+          name="Delete"
+          options={({ navigation }) => ({
+            header: () => (
+              <Header navigation={navigation} title="Verwijderen" />
+            ),
+          })}
+          component={Delete}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

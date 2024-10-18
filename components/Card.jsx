@@ -3,10 +3,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import mainStyle from "../styles/Style";
 
 export default function Card({ id, title, book, blz, navigation }) {
+  //Navigate to Edit page
   const handleEdit = () => {
     navigation.navigate("Edit", { id, title, book, blz });
   };
 
+  //Navigate to Delete page
   const handleDelete = () => {
     navigation.navigate("Delete", { id, title, book, blz });
   };
