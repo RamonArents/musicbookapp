@@ -31,8 +31,6 @@ export default function Home({ navigation }) {
       //No loading indicator when finished
       setLoading(false);
     }
-    //TODO: Refresh this data
-    console.log(bookArray);
   };
 
   //Call function loadMusicBooks in useEffect

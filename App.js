@@ -20,7 +20,6 @@ export default function App() {
         const dbInstance = await openDatabase();
         setDb(dbInstance);
         createTable(dbInstance);
-        //TODO: Select data here instead on homepage. Then pass the returned data to the homepage
       } catch (error) {
         setError(error.message);
         console.error("Failed to open database: " + error);

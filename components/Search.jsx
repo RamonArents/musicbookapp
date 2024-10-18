@@ -13,6 +13,7 @@ import mainStyle from "../styles/Style";
 export default function SearchComponent({ data, navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(data);
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleSearch = (text) => {
     if (typeof text !== "string") return;
@@ -26,6 +27,16 @@ export default function SearchComponent({ data, navigation }) {
     setSearchQuery(text);
     setFilteredData(filtered);
   };
+
+  //TODO: Find out how we can refresh the flatlist (the data is refreshed if we search something)
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    setTimeout(() => {
+
+      setRefreshing(false);
+    }, 2000);
+  }
 
   return (
     <View style={[styles.container, mainStyle.flex1]}>
@@ -54,6 +65,8 @@ export default function SearchComponent({ data, navigation }) {
           )}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.flatlist}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
         />
       </View>
     </View>
