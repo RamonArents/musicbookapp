@@ -36,9 +36,7 @@ export default function Home({ navigation }) {
   //Call function loadMusicBooks in useEffect
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      console.log("reloaded");
       loadMusicBooks();
-      
     });
     return unsubscribe;
   }, [navigation]);

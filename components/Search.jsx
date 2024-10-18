@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   TextInput,
@@ -9,6 +9,7 @@ import {
 import Card from "./Card";
 import { Ionicons } from "@expo/vector-icons";
 import mainStyle from "../styles/Style";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function SearchComponent({ data, navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,15 +29,20 @@ export default function SearchComponent({ data, navigation }) {
     setFilteredData(filtered);
   };
 
-  //TODO: Find out how we can refresh the flatlist (the data is refreshed if we search something)
   const onRefresh = () => {
     setRefreshing(true);
 
-    setTimeout(() => {
+    //Do an empty search to reload the data
+    setSearchQuery("");
+    setFilteredData(data);
+    setRefreshing(false);
+  };
 
-      setRefreshing(false);
-    }, 2000);
-  }
+  useFocusEffect(
+    useCallback(() => { 
+      onRefresh();
+    }, [data])
+  )
 
   return (
     <View style={[styles.container, mainStyle.flex1]}>
