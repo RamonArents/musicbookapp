@@ -5,9 +5,10 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
+  Alert,
 } from "react-native";
 import mainStyle from "../styles/Style";
-import Toast from 'react-native-root-toast';
+import Toast from "react-native-root-toast";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Delete({ route }) {
@@ -27,7 +28,6 @@ export default function Delete({ route }) {
       });
 
       navigation.navigate("Home");
-
     } catch (error) {
       Toast.show("Er ging iets mis. Foutmelding: " + error, {
         duration: Toast.durations.LONG,
@@ -35,6 +35,22 @@ export default function Delete({ route }) {
       });
       console.error("Error deleting book: ", error);
     }
+  };
+
+  const confirmDelete = () => {
+    Alert.alert(
+      "Verwijder boek",
+      `Weet je zeker dat je dit boek wilt verwijderen?\n\n${title} \n ${book} \n ${blz}`,
+      [
+        {
+          text: "Nee",
+          onPress: () => console.log("Cancel pressed"),
+          style: "cancel",
+        },
+        { text: "Ja", onPress: () => handleOnPress() },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
@@ -65,7 +81,7 @@ export default function Delete({ route }) {
                 Bladzijde: {blz}
               </Text>
             </View>
-            <TouchableOpacity style={mainStyle.button} onPress={handleOnPress}>
+            <TouchableOpacity style={mainStyle.button} onPress={confirmDelete}>
               <Text style={mainStyle.colorWhite}>Verwijderen</Text>
             </TouchableOpacity>
           </View>
