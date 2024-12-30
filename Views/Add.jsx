@@ -67,6 +67,7 @@ export default function Add() {
             />
             <Text style={[styles.labels, styles.colorWhite]}>Bladzijde:</Text>
             <TextInput
+              keyboardType="numeric"
               style={styles.input}
               placeholder="Blz"
               value={blz}

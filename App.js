@@ -13,6 +13,7 @@ import { openDatabase, createTable } from "./controllers/db";
 
 enableScreens();
 
+//TODO: App build working on server. We still have to find out to build it as an apk. See e.v.t. https://www.youtube.com/watch?v=SnfUM6iDsdo&t=41s 
 export default function App() {
   //Create db on startup of the app
   useEffect(() => {

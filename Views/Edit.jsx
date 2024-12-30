@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import styles from "../styles/Style";
 import { openDatabase, updateBook } from "../controllers/db";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-root-toast";
 
 export default function Edit({ route }) {
@@ -24,11 +24,8 @@ export default function Edit({ route }) {
       //Call openDatabase from db.js
       const db = await openDatabase();
 
-      //Check if blz is numeric and replace non-numeric characters with an empty string
-      const blzInNumbers = updateBlz.replace(/[^0-9]/g, "");
-
       //Call update book from db.js
-      await updateBook(db, id, updateTitle, updateTheBook, blzInNumbers);
+      await updateBook(db, id, updateTitle, updateTheBook, updateBlz);
 
       //Show success message
       Toast.show("Boek succesvol bijgewerkt", {
@@ -72,7 +69,7 @@ export default function Edit({ route }) {
               keyboardType="numeric"
               style={styles.input}
               placeholder="Blz"
-              value={updateBlz}
+              value={`${updateBlz}`}
               onChangeText={setBlz}
             />
             <TouchableOpacity style={styles.button} onPress={handleOnPress}>
