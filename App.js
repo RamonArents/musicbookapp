@@ -1,3 +1,4 @@
+import { enableScreens } from 'react-native-screens';
 import Home from "./Views/Home";
 import Add from "./Views/Add";
 import Edit from "./Views/Edit";
@@ -7,8 +8,10 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { openDatabase, createTable } from "./controllers/db";
+
+enableScreens();
 
 export default function App() {
   //Create db on startup of the app
