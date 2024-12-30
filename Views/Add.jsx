@@ -29,7 +29,7 @@ export default function Add() {
       setBlz("");
 
       //Show success message
-      Toast.show("Boek succesvol bijgewerkt", {
+      Toast.show("Boek succesvol toegevoegd", {
         duration: Toast.durations.LONG,
         backgroundColor: "#047838",
       });

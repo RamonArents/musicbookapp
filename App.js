@@ -1,3 +1,13 @@
+/**
+ * To run to test app: npm run android
+ * To run on real device as apk:
+ * 1. cd in android folder
+ * 2. run ./gradlew clean
+ * 3. run ./gradlew assembleRelease
+ * 4. go to android->app->build->outputs->apk
+ * 5. copy the release APK to the downloads folder on the android device
+ * 6. Install the APK on device by tapping on it on the device.
+ */
 import { enableScreens } from 'react-native-screens';
 import Home from "./Views/Home";
 import Add from "./Views/Add";
@@ -13,7 +23,6 @@ import { openDatabase, createTable } from "./controllers/db";
 
 enableScreens();
 
-//TODO: App build working on server. We still have to find out to build it as an apk. See e.v.t. https://www.youtube.com/watch?v=SnfUM6iDsdo&t=41s 
 export default function App() {
   //Create db on startup of the app
   useEffect(() => {
