@@ -2,13 +2,13 @@
  * To run to test app: npm run android
  * To run on real device as apk:
  * 1. cd in android folder
- * 2. run ./gradlew clean
+ * 2. run ./gradlew clean (optional, run only when version updates are needed)
  * 3. run ./gradlew assembleRelease
  * 4. go to android->app->build->outputs->apk
  * 5. copy the release APK to the downloads folder on the android device
  * 6. Install the APK on device by tapping on it on the device.
  */
-import { enableScreens } from 'react-native-screens';
+import { enableScreens } from "react-native-screens";
 import Home from "./Views/Home";
 import Add from "./Views/Add";
 import Edit from "./Views/Edit";
@@ -20,6 +20,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect } from "react";
 import { openDatabase, createTable } from "./controllers/db";
+import { StatusBar } from "expo-status-bar";
 
 enableScreens();
 
@@ -44,6 +45,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor="#1d3275" barStyle="light-content" />
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
