@@ -34,7 +34,7 @@ export default function Card({ id, title, book, blz, navigation }) {
       <View style={[styles.textContainer, mainStyle.flex1]}>
         <Text style={[styles.title, mainStyle.colorWhite]}>{title}</Text>
         <Text style={[styles.description, mainStyle.colorWhite]}>{book}</Text>
-        <Text style={[styles.description, mainStyle.colorWhite]}>{blz}</Text>
+        <Text style={[styles.description, mainStyle.colorWhite]}>blz: {blz}</Text>
       </View>
     </View>
   );

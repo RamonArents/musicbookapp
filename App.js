@@ -7,6 +7,11 @@
  * 4. go to android->app->build->outputs->apk
  * 5. copy the release APK to the downloads folder on the android device
  * 6. Install the APK on device by tapping on it on the device.
+ * 
+ * To modify the app icon:
+ * 1. Update the icon.pdn in the pdn folder (not on Git)
+ * 2. Replace the icon.png with the created icon (save as a png in paint.net)
+ * 3. run the command: npx icon-set-creator create ./path/to/icon.png (ignore the error about IOS)
  */
 import { enableScreens } from "react-native-screens";
 import Home from "./Views/Home";
